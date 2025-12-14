@@ -9,26 +9,56 @@ os.makedirs(nicho_path, exist_ok=True)
 css_path = os.path.join(nicho_path, "css")
 os.makedirs(css_path, exist_ok=True)
 
-# Crie style.css básico se não existir
+# Cria style.css padrão se não existir
 css_file = os.path.join(css_path, "style.css")
 if not os.path.exists(css_file):
     with open(css_file, "w", encoding="utf-8") as f:
         f.write("""
 body {
-  font-family: Arial, sans-serif;
-  margin: 20px;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #f7f7f7;
+  margin: 0;
+  padding: 0;
 }
+
+.container {
+  max-width: 800px;
+  margin: 40px auto;
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+}
+
 h1 {
   color: #2c3e50;
+  margin-bottom: 10px;
 }
-a {
+
+p {
+  line-height: 1.6;
+  color: #444;
+}
+
+.cta {
   display: inline-block;
-  margin-top: 10px;
-  padding: 10px 15px;
+  margin-top: 20px;
+  padding: 14px 22px;
   background-color: #27ae60;
-  color: white;
+  color: #ffffff;
   text-decoration: none;
-  border-radius: 5px;
+  font-weight: bold;
+  border-radius: 6px;
+}
+
+.cta:hover {
+  background-color: #219150;
+}
+
+.disclaimer {
+  margin-top: 30px;
+  font-size: 13px;
+  color: #777;
 }
 """)
 
@@ -42,13 +72,40 @@ def criar_pagina(produto):
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>{produto['produto']}</title>
+  <title>{produto['produto']} | Vale a pena?</title>
+  <meta name="description" content="Análise honesta do produto {produto['produto']}. Veja se vale a pena e para quem é indicado.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <h1>{produto['produto']}</h1>
-  <p>Nicho: {produto['nicho']}</p>
-  <a href="{produto['link_afiliado']}" target="_blank">Comprar agora</a>
+
+  <div class="container">
+    <h1>{produto['produto']}</h1>
+
+    <p>
+      Neste conteúdo fazemos uma análise clara e direta sobre o
+      <strong>{produto['produto']}</strong>, explicando para quem ele é indicado
+      e se realmente vale a pena.
+    </p>
+
+    <p>
+      Este produto pertence ao nicho <strong>{produto['nicho']}</strong> e é mais indicado
+      para pessoas que desejam evoluir nessa área com um caminho estruturado.
+    </p>
+
+    <a class="cta" href="{produto['link_afiliado']}" target="_blank">
+      Acessar o produto oficial
+    </a>
+
+    <div class="disclaimer">
+      <p>
+        Este site não é o produtor do conteúdo.
+        Podemos receber comissão caso você compre pelo link acima,
+        sem custo adicional para você.
+      </p>
+    </div>
+  </div>
+
 </body>
 </html>
 """
@@ -57,3 +114,23 @@ def criar_pagina(produto):
         f.write(html_content)
 
     print(f"✅ Página criada: {filepath}")
+
+# ===============================
+# EXECUÇÃO DIRETA DO SCRIPT
+# ===============================
+if __name__ == "__main__":
+    json_path = os.path.join(os.path.dirname(__file__), "../data/produtos.json")
+
+    if not os.path.exists(json_path):
+        print("❌ Arquivo produtos.json não encontrado.")
+        exit()
+
+    with open(json_path, "r", encoding="utf-8") as f:
+        produtos = json.load(f)
+
+    if not produtos:
+        print("⚠️ Nenhum produto encontrado no JSON.")
+        exit()
+
+    for produto in produtos:
+        criar_pagina(produto)
