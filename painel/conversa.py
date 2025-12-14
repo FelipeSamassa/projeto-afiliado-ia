@@ -1,22 +1,24 @@
 from ia_gerador import gerar_conteudo
 from gerar_pagina import gerar_pagina
+from config import MACRO_NICHO
 
 def perguntar(texto):
     return input(f"{texto}: ").strip()
 
 def validar_dados(dados):
     faltando = []
-    for campo in ["produto", "nicho", "link"]:
+    for campo in ["produto", "subnicho", "link"]:
         if not dados.get(campo):
             faltando.append(campo)
     return faltando
 
 def modo_conversa():
     print("\n🧠 MODO CONVERSA — CRIAÇÃO DE PÁGINA\n")
+    print(f"📌 Macro-nicho atual: {MACRO_NICHO}\n")
 
     dados_usuario = {
         "produto": "",
-        "nicho": "",
+        "subnicho": "",
         "link": ""
     }
 
@@ -24,8 +26,8 @@ def modo_conversa():
         if not dados_usuario["produto"]:
             dados_usuario["produto"] = perguntar("Digite o NOME DO PRODUTO")
 
-        if not dados_usuario["nicho"]:
-            dados_usuario["nicho"] = perguntar("Digite o NICHO")
+        if not dados_usuario["subnicho"]:
+            dados_usuario["subnicho"] = perguntar("Digite o SUBNICHO (ex: Excel para iniciantes)")
 
         if not dados_usuario["link"]:
             dados_usuario["link"] = perguntar("Digite o LINK AFILIADO")
@@ -44,7 +46,7 @@ def modo_conversa():
 
         conteudo = gerar_conteudo(
             dados_usuario["produto"],
-            dados_usuario["nicho"]
+            dados_usuario["subnicho"]
         )
 
         dados = {
@@ -61,7 +63,9 @@ def modo_conversa():
             "MICROTEXTO_CONFIANCA": conteudo["MICROTEXTO_CONFIANCA"],
             "TEXTO_CTA": conteudo["TEXTO_CTA"],
             "LINK_AFILIADO": dados_usuario["link"],
-            "FAQ": ""
+            "FAQ": "",
+            "MACRO_NICHO": MACRO_NICHO,
+            "SUBNICHO": dados_usuario["subnicho"]
         }
 
         gerar_pagina(dados)
