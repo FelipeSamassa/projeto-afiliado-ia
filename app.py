@@ -3,15 +3,25 @@ import json
 import os
 from painel.scripts.criar_paginas import criar_pagina
 
-app = Flask(__name__, static_folder="painel", static_url_path="/painel")
+app = Flask(__name__, static_folder=None)  # desabilita static automático
 
-# Caminho do JSON
-json_path = os.path.join("painel", "data", "produtos.json")
+# Caminho absoluto do JSON de produtos
+json_path = os.path.join(os.getcwd(), "painel", "data", "produtos.json")
 
 # Serve index.html do painel
 @app.route("/")
 def painel():
-    return send_from_directory("painel", "index.html")
+    return send_from_directory(os.path.join(os.getcwd(), "painel"), "index.html")
+
+# Serve CSS do painel
+@app.route("/painel/css/<path:filename>")
+def painel_css(filename):
+    return send_from_directory(os.path.join(os.getcwd(), "painel", "css"), filename)
+
+# Serve JS do painel
+@app.route("/painel/js/<path:filename>")
+def painel_js(filename):
+    return send_from_directory(os.path.join(os.getcwd(), "painel", "js"), filename)
 
 # Endpoint para listar produtos
 @app.route("/produtos", methods=["GET"])
@@ -33,7 +43,6 @@ def atualizar_produto():
     for p in produtos:
         if p["id"] == produto_id:
             p["status"] = "aprovado" if acao == "aprovar" else "rejeitado"
-            # Cria página automaticamente se aprovado
             if acao == "aprovar":
                 criar_pagina(p)
             break
