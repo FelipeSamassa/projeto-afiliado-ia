@@ -11,7 +11,7 @@ css_path = os.path.join(nicho_path, "css")
 os.makedirs(css_path, exist_ok=True)
 
 # ===============================
-# CSS PADRÃO (criado automaticamente)
+# CSS PADRÃO
 # ===============================
 css_file = os.path.join(css_path, "style.css")
 if not os.path.exists(css_file):
@@ -66,27 +66,31 @@ p {
 """)
 
 # ===============================
-# TEXTO DINÂMICO (sem IA ainda)
+# TEXTO PADRÃO (fallback)
 # ===============================
-def gerar_descricao(produto):
+def gerar_descricao_padrao(produto):
     return f"""
-O {produto['produto']} é uma solução voltada para quem deseja evoluir no nicho
-de {produto['nicho']}. Ele foi desenvolvido para pessoas que buscam um caminho
-mais organizado e prático nessa área.
+<p>
+O <strong>{produto['produto']}</strong> é uma solução voltada para quem deseja evoluir no nicho
+de <strong>{produto['nicho']}</strong>, buscando mais clareza, organização e resultados práticos.
+</p>
 
-Produtos desse tipo vêm se destacando por entregarem conhecimento aplicável,
-principalmente para quem quer resultados reais e consistentes.
+<p>
+A proposta do produto é entregar um caminho estruturado, com conteúdo aplicável,
+sem promessas irreais.
+</p>
 """
 
 # ===============================
-# GERADOR DE PÁGINAS
+# GERADOR DE PÁGINAS (COM BLOCO EDITÁVEL)
 # ===============================
 def criar_pagina(produto):
     filename = f"{produto['produto'].replace(' ', '_')}.html"
     filepath = os.path.join(nicho_path, filename)
 
-    html_content = f"""
-<!DOCTYPE html>
+    link = produto.get("link_afiliado", "#") or "#"
+
+    html_content = f"""<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
@@ -100,11 +104,11 @@ def criar_pagina(produto):
   <div class="container">
     <h1>{produto['produto']}</h1>
 
-    <p>
-      {gerar_descricao(produto)}
-    </p>
+    <!-- IA:DESCRICAO -->
+    {gerar_descricao_padrao(produto)}
+    <!-- /IA:DESCRICAO -->
 
-    <a class="cta" href="{produto['link_afiliado']}" target="_blank">
+    <a class="cta" href="{link}" target="_blank">
       Acessar o produto oficial
     </a>
 

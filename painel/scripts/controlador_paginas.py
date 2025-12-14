@@ -63,3 +63,28 @@ def editar_pagina(produto, novo_conteudo):
         f.write(novo_conteudo)
 
     return True
+
+def substituir_bloco_descricao(produto, novo_html_bloco):
+    path = caminho_pagina(produto)
+
+    if not os.path.exists(path):
+        return False, "Página não existe"
+
+    with open(path, "r", encoding="utf-8") as f:
+        conteudo = f.read()
+
+    ini = "<!-- IA:DESCRICAO -->"
+    fim = "<!-- /IA:DESCRICAO -->"
+
+    if ini not in conteudo or fim not in conteudo:
+        return False, "Bloco IA:DESCRICAO não encontrado na página"
+
+    antes, resto = conteudo.split(ini, 1)
+    meio, depois = resto.split(fim, 1)
+
+    novo_conteudo = antes + ini + "\n" + novo_html_bloco.strip() + "\n" + fim + depois
+
+    with open(path, "w", encoding="utf-8") as f:
+        f.write(novo_conteudo)
+
+    return True, "Descrição atualizada"

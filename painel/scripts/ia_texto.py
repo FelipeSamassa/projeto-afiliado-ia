@@ -1,21 +1,33 @@
-def gerar_texto(produto, nicho):
-    return f"""
-<h1>{produto} – Análise Completa</h1>
+import os
+from dotenv import load_dotenv
+from openai import OpenAI
 
-<p>
-O <strong>{produto}</strong> é um produto voltado para pessoas que desejam evoluir
-no nicho de <strong>{nicho}</strong>, buscando mais clareza, organização e resultados
-práticos.
-</p>
+load_dotenv()
 
-<p>
-Nos últimos anos, soluções como essa ganharam destaque por oferecerem conteúdos
-mais direcionados e aplicáveis, principalmente para quem quer sair da teoria e
-partir para a prática.
-</p>
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
-<p>
-A proposta do {produto} é entregar exatamente isso: um caminho estruturado,
-sem promessas irreais, focado em aprendizado progressivo.
-</p>
+def gerar_descricao_html(produto, nicho):
+    prompt = f"""
+Crie APENAS a seção de descrição (HTML) para uma página de review.
+
+Produto: {produto}
+Nicho: {nicho}
+
+Regras:
+- Retorne somente HTML (ex: <p>...</p><p>...</p>)
+- 2 a 4 parágrafos curtos
+- Linguagem clara e direta
+- Não faça promessas irreais
+- Sem links e sem botão (isso fica fora)
 """
+
+    resp = client.chat.completions.create(
+        model="gpt-4o-mini",
+        messages=[
+            {"role": "system", "content": "Você é um redator profissional focado em clareza e ética."},
+            {"role": "user", "content": prompt}
+        ],
+        temperature=0.7
+    )
+
+    return resp.choices[0].message.content

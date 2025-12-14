@@ -1,24 +1,19 @@
 from controlador_paginas import (
     listar_paginas,
     apagar_pagina,
-    editar_pagina
+    substituir_bloco_descricao
 )
 
-from ia_texto import gerar_texto
 from ia_decisora import decidir_acao
 from criar_paginas import criar_pagina
-
-import os
-import json
-
-BASE_DIR = os.path.dirname(__file__)
-JSON_PATH = os.path.join(BASE_DIR, "../data/produtos.json")
+from ia_texto import gerar_descricao_html
 
 def menu():
     print("\n=== CONSOLE DE CONTROLE ===")
     print("1 - Listar páginas")
     print("2 - Apagar página")
     print("3 - IA decidir (criar ou editar)")
+    print("4 - IA editar SOMENTE a descrição")
     print("0 - Sair")
 
 def executar():
@@ -46,27 +41,38 @@ def executar():
             nicho = input("Nicho do produto: ").strip()
 
             acao = decidir_acao(produto)
-
             print(f"\n🤖 IA sugere: {acao.upper()} a página")
 
             confirmar = input("Deseja continuar? (s/n): ").strip().lower()
-
             if confirmar != "s":
                 print("❎ Ação cancelada.")
                 continue
 
             if acao == "criar":
-                criar_pagina({
-                    "produto": produto,
-                    "nicho": nicho,
-                    "link_afiliado": "#"
-                })
-                print("✅ Página criada pela IA.")
+                criar_pagina({"produto": produto, "nicho": nicho, "link_afiliado": "#"})
+                print("✅ Página criada.")
+            else:
+                # Se for editar, por enquanto só substitui a descrição
+                bloco = gerar_descricao_html(produto, nicho)
+                ok, msg = substituir_bloco_descricao(produto, bloco)
+                print("✅" if ok else "❌", msg)
 
-            elif acao == "editar":
-                texto = gerar_texto(produto, nicho)
-                editar_pagina(produto, texto)
-                print("✅ Página editada pela IA.")
+        elif escolha == "4":
+            produto = input("Nome do produto: ").strip()
+            nicho = input("Nicho do produto: ").strip()
+
+            bloco = gerar_descricao_html(produto, nicho)
+
+            print("\n=== NOVA DESCRIÇÃO (IA) ===")
+            print(bloco)
+
+            confirmar = input("\nAplicar essa descrição na página? (s/n): ").strip().lower()
+            if confirmar != "s":
+                print("❎ Alteração cancelada.")
+                continue
+
+            ok, msg = substituir_bloco_descricao(produto, bloco)
+            print("✅" if ok else "❌", msg)
 
         elif escolha == "0":
             print("Saindo...")
