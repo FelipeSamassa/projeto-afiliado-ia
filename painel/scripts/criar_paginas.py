@@ -1,18 +1,11 @@
 import json
 import os
 
-# Caminhos
-json_path = os.path.join(os.path.dirname(__file__), "../data/produtos.json")
-nicho_path = os.path.join(os.path.dirname(__file__), "../nicho")
-
-# Garante que a pasta nicho exista
+# Caminho para a pasta nicho
+nicho_path = os.path.join(os.path.dirname(__file__), "../../nicho")
 os.makedirs(nicho_path, exist_ok=True)
 
-# Carrega produtos
-with open(json_path, "r") as f:
-    produtos = json.load(f)
-
-# Função para criar página
+# Função para criar página de produto
 def criar_pagina(produto):
     filename = f"{produto['produto'].replace(' ', '_')}.html"
     filepath = os.path.join(nicho_path, filename)
@@ -36,8 +29,3 @@ def criar_pagina(produto):
         f.write(html_content)
     
     print(f"✅ Página criada: {filepath}")
-
-# Cria páginas apenas para produtos aprovados
-for p in produtos:
-    if p["status"] == "aprovado":
-        criar_pagina(p)
