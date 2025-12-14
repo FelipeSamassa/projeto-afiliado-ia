@@ -9,9 +9,40 @@
 
 <h1>Painel Privado da IA</h1>
 
-<div id="produtos">
-  <!-- Lista de produtos aparecerá aqui -->
-</div>
+<div id="produtos"></div>
+
+<script src="js/main.js"></script>
+<script>
+  // Inicialização simples de dados simulando a IA
+  const produtos = [
+    {id: 1, nome: "Curso Excel", status: "pendente", recomendacao: "Vender agora"},
+    {id: 2, nome: "Curso HTML/CSS", status: "pendente", recomendacao: "Aguardar"}
+  ];
+
+  const container = document.getElementById('produtos');
+  produtos.forEach(p => {
+    const div = document.createElement('div');
+    div.innerHTML = `
+      <h3>${p.nome}</h3>
+      <p>Status: ${p.status}</p>
+      <p>Recomendação: ${p.recomendacao}</p>
+      <button onclick="aprovar(${p.id})">Aprovar</button>
+      <button onclick="rejeitar(${p.id})">Rejeitar</button>
+      <hr>
+    `;
+    container.appendChild(div);
+  });
+
+  function aprovar(id) {
+    alert("Produto " + id + " aprovado!");
+    // Aqui futuramente você pode atualizar produtos.json e site público
+  }
+
+  function rejeitar(id) {
+    alert("Produto " + id + " rejeitado!");
+  }
+</script>
+
 
 <script src="js/main.js"></script>
 </body>

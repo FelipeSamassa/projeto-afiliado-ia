@@ -1,4 +1,8 @@
-// Exemplo de função para aprovar produto
-function aprovarProduto(id) {
+function aprovar(id) {
   alert("Produto " + id + " aprovado!");
 }
+
+function rejeitar(id) {
+  alert("Produto " + id + " rejeitado!");
+}
+
