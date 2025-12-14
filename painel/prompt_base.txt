@@ -1,0 +1,14 @@
+Crie conteúdo para uma página de produto afiliado.
+
+Objetivo:
+- Converter sem exageros
+- Falar com iniciantes
+- Resolver uma dor real
+
+Entregue APENAS um JSON válido com:
+HEADLINE
+SUBHEADLINE
+BENEFICIOS (em <li>)
+DESCRICAO_PRODUTO (em <p>)
+MICROTEXTO_CONFIANCA
+TEXTO_CTA
