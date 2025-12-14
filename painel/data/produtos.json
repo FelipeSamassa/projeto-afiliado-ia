@@ -5,5 +5,12 @@
     "nicho": "Dinheiro",
     "status": "pendente",
     "observacoes": ""
+  },
+  {
+    "produto": "Curso HTML/CSS",
+    "link_afiliado": "URL_AQUI",
+    "nicho": "Programação",
+    "status": "pendente",
+    "observacoes": ""
   }
 ]

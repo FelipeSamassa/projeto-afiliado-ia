@@ -1,7 +1,11 @@
 import json
+import os
+
+# Caminho correto para o JSON
+caminho_json = os.path.join(os.path.dirname(__file__), "../data/produtos.json")
 
 # Carrega produtos
-with open("../data/produtos.json", "r") as f:
+with open(caminho_json, "r") as f:
     produtos = json.load(f)
 
 # Simula análise da IA
@@ -17,5 +21,8 @@ for p in produtos:
             print(f"Produto '{p['produto']}' rejeitado!")
 
 # Salva alterações
-with open("../data/produtos.json", "w") as f:
+with open(caminho_json, "w") as f:
     json.dump(produtos, f, indent=2)
+
+print("\n✅ Todos os produtos foram processados. Você pode atualizar o painel no navegador.")
+

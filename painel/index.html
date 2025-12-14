@@ -2,47 +2,23 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Painel Privado - IA</title>
+  <title>Painel Privado Avançado - IA</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-<h1>Painel Privado da IA</h1>
+<h1>Painel Privado Avançado da IA</h1>
 
+<div class="chatbox">
+  <label>Pergunte à IA:</label><br>
+  <input type="text" id="pergunta" placeholder="Ex: Produtos campeões do subnicho X">
+  <button onclick="enviarPergunta()">Enviar</button>
+</div>
+
+<div id="resposta" class="resposta"></div>
+
+<h2>Produtos atuais</h2>
 <div id="produtos"></div>
-
-<script src="js/main.js"></script>
-<script>
-  // Inicialização simples de dados simulando a IA
-  const produtos = [
-    {id: 1, nome: "Curso Excel", status: "pendente", recomendacao: "Vender agora"},
-    {id: 2, nome: "Curso HTML/CSS", status: "pendente", recomendacao: "Aguardar"}
-  ];
-
-  const container = document.getElementById('produtos');
-  produtos.forEach(p => {
-    const div = document.createElement('div');
-    div.innerHTML = `
-      <h3>${p.nome}</h3>
-      <p>Status: ${p.status}</p>
-      <p>Recomendação: ${p.recomendacao}</p>
-      <button onclick="aprovar(${p.id})">Aprovar</button>
-      <button onclick="rejeitar(${p.id})">Rejeitar</button>
-      <hr>
-    `;
-    container.appendChild(div);
-  });
-
-  function aprovar(id) {
-    alert("Produto " + id + " aprovado!");
-    // Aqui futuramente você pode atualizar produtos.json e site público
-  }
-
-  function rejeitar(id) {
-    alert("Produto " + id + " rejeitado!");
-  }
-</script>
-
 
 <script src="js/main.js"></script>
 </body>
