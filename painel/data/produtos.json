@@ -1,18 +1,17 @@
 [
   {
-    "id": 1,
-    "produto": "Curso Excel",
-    "link_afiliado": "URL_AQUI",
-    "nicho": "Dinheiro",
-    "status": "aprovado",
-    "observacoes": ""
+    "produto": "Curso Completo de Excel",
+    "nicho": "Produtividade",
+    "link_afiliado": "https://SEULINKAQUI"
   },
   {
-    "id": 2,
-    "produto": "Curso HTML/CSS",
-    "link_afiliado": "URL_AQUI",
+    "produto": "Formação HTML e CSS",
     "nicho": "Programação",
-    "status": "pendente",
-    "observacoes": ""
+    "link_afiliado": "https://SEULINKAQUI"
+  },
+  {
+    "produto": "Curso de Renda Extra Online",
+    "nicho": "Dinheiro",
+    "link_afiliado": "https://SEULINKAQUI"
   }
 ]

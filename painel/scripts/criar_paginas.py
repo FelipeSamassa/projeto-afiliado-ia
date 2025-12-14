@@ -1,15 +1,18 @@
 import json
 import os
 
-# Caminho para a pasta nicho
+# ===============================
+# CAMINHOS
+# ===============================
 nicho_path = os.path.join(os.path.dirname(__file__), "../../nicho")
 os.makedirs(nicho_path, exist_ok=True)
 
-# Garante que a pasta CSS exista
 css_path = os.path.join(nicho_path, "css")
 os.makedirs(css_path, exist_ok=True)
 
-# Cria style.css padrão se não existir
+# ===============================
+# CSS PADRÃO (criado automaticamente)
+# ===============================
 css_file = os.path.join(css_path, "style.css")
 if not os.path.exists(css_file):
     with open(css_file, "w", encoding="utf-8") as f:
@@ -62,7 +65,22 @@ p {
 }
 """)
 
-# Função para criar página de produto
+# ===============================
+# TEXTO DINÂMICO (sem IA ainda)
+# ===============================
+def gerar_descricao(produto):
+    return f"""
+O {produto['produto']} é uma solução voltada para quem deseja evoluir no nicho
+de {produto['nicho']}. Ele foi desenvolvido para pessoas que buscam um caminho
+mais organizado e prático nessa área.
+
+Produtos desse tipo vêm se destacando por entregarem conhecimento aplicável,
+principalmente para quem quer resultados reais e consistentes.
+"""
+
+# ===============================
+# GERADOR DE PÁGINAS
+# ===============================
 def criar_pagina(produto):
     filename = f"{produto['produto'].replace(' ', '_')}.html"
     filepath = os.path.join(nicho_path, filename)
@@ -83,14 +101,7 @@ def criar_pagina(produto):
     <h1>{produto['produto']}</h1>
 
     <p>
-      Neste conteúdo fazemos uma análise clara e direta sobre o
-      <strong>{produto['produto']}</strong>, explicando para quem ele é indicado
-      e se realmente vale a pena.
-    </p>
-
-    <p>
-      Este produto pertence ao nicho <strong>{produto['nicho']}</strong> e é mais indicado
-      para pessoas que desejam evoluir nessa área com um caminho estruturado.
+      {gerar_descricao(produto)}
     </p>
 
     <a class="cta" href="{produto['link_afiliado']}" target="_blank">
@@ -116,7 +127,7 @@ def criar_pagina(produto):
     print(f"✅ Página criada: {filepath}")
 
 # ===============================
-# EXECUÇÃO DIRETA DO SCRIPT
+# EXECUÇÃO DIRETA (SEM FLASK)
 # ===============================
 if __name__ == "__main__":
     json_path = os.path.join(os.path.dirname(__file__), "../data/produtos.json")
