@@ -1,7 +1,8 @@
-import json
 from pathlib import Path
 from ia_gerador import gerar_conteudo
+from seo_keywords import gerar_palavras_chave
 
+# Caminhos base
 BASE_DIR = Path(__file__).resolve().parent.parent
 TEMPLATE = BASE_DIR / "template_mestre_produto.html"
 OUTPUT_DIR = BASE_DIR / "docs" / "produtos"
@@ -19,20 +20,30 @@ def gerar_pagina(dados):
     print(f"✅ Página criada: {output}")
 
 if __name__ == "__main__":
+    # ===== DADOS DO PRODUTO =====
     produto = "Curso Completo de Excel"
-    nicho = "Produtividade e Excel"
+    tema = "Excel para trabalho"
     link = "https://go.hotmart.com/F103401870R"
 
-    conteudo = gerar_conteudo(produto, nicho)
+    # ===== SEO (SUGESTÃO DA IA) =====
+    palavras = gerar_palavras_chave(produto, tema)
+
+    print("\n🔑 PALAVRAS-CHAVE SUGERIDAS:\n")
+    print(palavras)
+
+    input("\n➡️ Pressione ENTER para continuar com a criação da página...")
+
+    # ===== CONTEÚDO =====
+    conteudo = gerar_conteudo(produto, tema)
 
     dados = {
         "NOME_ARQUIVO": "Curso_Excel_IA.html",
         "TITULO_PAGINA": f"{produto} – Vale a pena?",
-        "DESCRICAO_SEO": f"{produto} vale a pena? Veja como funciona.",
+        "DESCRICAO_SEO": f"{produto} vale a pena? Veja se funciona.",
         "HEADLINE": conteudo["HEADLINE"],
         "SUBHEADLINE": conteudo["SUBHEADLINE"],
         "PARA_QUEM_E": "<li>Iniciantes</li>",
-        "PARA_QUEM_NAO_E": "<li>Avançados</li>",
+        "PARA_QUEM_NAO_E": "<li>Usuários avançados</li>",
         "BENEFICIOS": conteudo["BENEFICIOS"],
         "NOME_PRODUTO": produto,
         "DESCRICAO_PRODUTO": conteudo["DESCRICAO_PRODUTO"],
