@@ -37,7 +37,7 @@ if __name__ == "__main__":
     conteudo = gerar_conteudo(produto, tema)
 
     dados = {
-        "NOME_ARQUIVO": "Curso_Excel_IA.html",
+        "NOME_ARQUIVO": "curso-excel-vale-a-pena.html",
         "TITULO_PAGINA": f"{produto} – Vale a pena?",
         "DESCRICAO_SEO": f"{produto} vale a pena? Veja se funciona.",
         "HEADLINE": conteudo["HEADLINE"],
