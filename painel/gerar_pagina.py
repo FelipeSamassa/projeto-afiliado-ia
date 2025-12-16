@@ -4,7 +4,7 @@ from seo_keywords import gerar_palavras_chave
 
 # Caminhos base
 BASE_DIR = Path(__file__).resolve().parent.parent
-TEMPLATE = BASE_DIR / "template_mestre_produto.html"
+TEMPLATE = BASE_DIR / "template_base_neutra.html"
 OUTPUT_DIR = BASE_DIR / "docs" / "produtos"
 
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
@@ -42,6 +42,7 @@ if __name__ == "__main__":
         "DESCRICAO_SEO": f"{produto} vale a pena? Veja se funciona.",
         "HEADLINE": conteudo["HEADLINE"],
         "SUBHEADLINE": conteudo["SUBHEADLINE"],
+        "INTRO_SEO": f"Veja se o {produto} realmente vale a pena, como funciona e se é indicado para quem quer aprender {tema}.",
         "PARA_QUEM_E": "<li>Iniciantes</li>",
         "PARA_QUEM_NAO_E": "<li>Usuários avançados</li>",
         "BENEFICIOS": conteudo["BENEFICIOS"],
