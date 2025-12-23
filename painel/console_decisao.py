@@ -1,25 +1,24 @@
-from ia_texto import chamar_ia_analise
+from decisao_nicho import analisar_nichos
 
-def analisar_nichos(objetivo):
-    prompt = f"""
-Você é um analista de mercado digital para afiliados iniciantes.
+def executar():
+    print("\n🔍 ANÁLISE DE NICHO COM IA")
+    print("-" * 40)
 
-Objetivo do usuário:
-{objetivo}
+    objetivo = input("\nDescreva seu objetivo:\n> ")
 
-Analise e retorne:
-1. 3 nichos promissores para começar
-2. Para cada nicho, informe:
-   - tipo de produto ideal (curso, assinatura, físico)
-   - nível de concorrência (baixo/médio/alto)
-   - facilidade de venda para iniciante
-   - motivo resumido
-3. Diga qual nicho você recomenda começar AGORA
-4. Diga se algum nicho deve ser evitado
+    print("\n⏳ Analisando com a IA...\n")
 
-Formato de resposta:
-- Texto claro
-- Listas
-- Sem enrolação
-"""
-    return chamar_ia_analise(prompt)
+    resultado = analisar_nichos(objetivo)
+
+    print("📊 RESULTADO DA IA:")
+    print("-" * 40)
+
+    if resultado:
+        print(resultado)
+    else:
+        print("⚠️ A IA não retornou resposta. Verifique o prompt.")
+
+    print("\n--- FIM DA ANÁLISE ---\n")
+
+if __name__ == "__main__":
+    executar()
